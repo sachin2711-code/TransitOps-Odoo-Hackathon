@@ -1,26 +1,25 @@
-/** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        dark: {
-          900: '#0f172a',
-          800: '#1e293b',
-          700: '#334155',
-        },
-        accent: {
-          500: '#3b82f6',
-          600: '#2563eb',
-        },
-        success: '#10b981',
-        warning: '#f59e0b',
-        danger: '#ef4444',
-      }
+        surface: '#121B24',
+        surface2: '#192330',
+        border: '#2A3341',
+        text: '#E7EBF1',
+        muted: '#8B96A8',
+        teal: '#34C9BE',
+        blue: '#5B8DEF',
+        amber: '#E8A33D',
+        red: '#E85D4E',
+      },
+      boxShadow: {
+        panel: '0 24px 80px rgba(0,0,0,0.38)',
+      },
+      borderRadius: {
+        xl: '1rem',
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/forms')],
+};
