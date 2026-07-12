@@ -9,7 +9,8 @@ from sqlalchemy.orm import Session
 from .database import get_db
 from . import models
 
-SECRET_KEY = "transitops-hackathon-secret-key-change-in-production"
+import os
+SECRET_KEY = os.environ.get("SECRET_KEY", "transitops-hackathon-secret-key-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days ("Remember me" checked)
 SHORT_SESSION_MINUTES = 60 * 8  # 8 hours (default session, "Remember me" unchecked)
