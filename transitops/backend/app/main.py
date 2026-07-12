@@ -4,6 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
+import mimetypes
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
+
 from . import models
 from .database import engine
 from .routers import (
