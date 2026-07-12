@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TransitOps · Fleet Operations Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="login-screen" class="login-screen">
+  <div class="login-panel">
+    <div class="login-brand">
+      <div class="brand-mark">TO</div>
+      <div>
+        <div class="brand-name">TransitOps</div>
+        <div class="brand-sub">Fleet Operations Console</div>
+      </div>
+    </div>
+
+    <div class="login-tabs">
+      <button class="tab-btn active" data-tab="signin">Sign In</button>
+      <button class="tab-btn" data-tab="signup">Create Account</button>
+    </div>
+
+    <form id="signin-form" class="auth-form">
+      <label>Email
+        <input type="email" id="signin-email" required placeholder="you@fleet.com" />
+      </label>
+      <label>Password
+        <input type="password" id="signin-password" required placeholder="••••••••" />
+      </label>
+      <label>Role (RBAC)
+        <select id="signin-role">
+          <option value="">Any role on this account</option>
+          <option value="fleet_manager">Fleet Manager</option>
+          <option value="driver">Driver</option>
+          <option value="safety_officer">Safety Officer</option>
+          <option value="financial_analyst">Financial Analyst</option>
+        </select>
+      </label>
+      <div class="auth-row">
+        <label class="checkbox-label">
+          <input type="checkbox" id="signin-remember" checked />
+          <span>Remember me</span>
+        </label>
+        <button type="button" class="fp-trigger-link" id="forgot-password-link">Forgot password?</button>
+      </div>
+      <div id="signin-error" class="form-error"></div>
+      <button type="submit" class="btn-primary">Enter Console</button>
+    </form>
+
+    <form id="signup-form" class="auth-form hidden">
+      <label>Full Name
+        <input type="text" id="signup-name" required placeholder="Jordan Blake" />
+      </label>
+      <label>Email
+        <input type="email" id="signup-email" required placeholder="you@fleet.com" />
+      </label>
+      <label>Password
+        <input type="password" id="signup-password" required minlength="6" placeholder="min. 6 characters" />
+      </label>
+      <label>Role
+        <select id="signup-role" required>
+          <option value="fleet_manager">Fleet Manager</option>
+          <option value="driver">Driver</option>
+          <option value="safety_officer">Safety Officer</option>
+          <option value="financial_analyst">Financial Analyst</option>
+        </select>
+      </label>
+      <div id="signup-error" class="form-error"></div>
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <div class="demo-creds">
+      <div class="demo-creds-title">Demo Accounts <span>(password: password123)</span></div>
+      <div class="demo-row"><span>Fleet Manager</span><code>fleet.manager@transitops.demo</code></div>
+      <div class="demo-row"><span>Driver</span><code>driver@transitops.demo</code></div>
+      <div class="demo-row"><span>Safety Officer</span><code>safety.officer@transitops.demo</code></div>
+      <div class="demo-row"><span>Financial Analyst</span><code>finance@transitops.demo</code></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORGOT PASSWORD MODAL ============ -->
+<div id="forgot-password-modal" class="fp-overlay hidden">
+  <div class="fp-card">
+    <div class="fp-title">Reset your password</div>
+    <div class="fp-sub">Enter your account email. We'll send reset instructions if it matches an account.</div>
+    <label>Email
+      <input type="email" id="fp-email" placeholder="you@fleet.com" />
+    </label>
+    <div id="fp-message" class="fp-message hidden"></div>
+    <div class="fp-actions">
+      <button class="btn-ghost" id="fp-cancel">Cancel</button>
+      <button class="btn-primary" id="fp-submit">Send Instructions</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app-shell" class="app-shell hidden">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark small">TO</div>
+      <span>TransitOps</span>
+    </div>
+    <nav class="side-nav">
+      <button class="nav-item active" data-view="dashboard"><span class="nav-dot"></span>Dashboard</button>
+      <button class="nav-item" data-view="vehicles"><span class="nav-dot"></span>Vehicle Registry</button>
+      <button class="nav-item" data-view="drivers"><span class="nav-dot"></span>Drivers</button>
+      <button class="nav-item" data-view="trips"><span class="nav-dot"></span>Trips &amp; Dispatch</button>
+      <button class="nav-item" data-view="maintenance"><span class="nav-dot"></span>Maintenance</button>
+      <button class="nav-item" data-view="fuel"><span class="nav-dot"></span>Fuel &amp; Expenses</button>
+      <button class="nav-item" data-view="reports"><span class="nav-dot"></span>Reports &amp; Analytics</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div>
+          <div class="user-name" id="user-name">—</div>
+          <div class="user-role" id="user-role">—</div>
+        </div>
+      </div>
+      <button class="btn-ghost" id="logout-btn">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div id="view-title" class="view-title">Dashboard</div>
+      <div id="view-actions" class="view-actions"></div>
+    </header>
+    <div id="toast" class="toast hidden"></div>
+    <div id="view-content" class="view-content"></div>
+  </main>
+</div>
+
+<!-- Modal root -->
+<div id="modal-root"></div>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
