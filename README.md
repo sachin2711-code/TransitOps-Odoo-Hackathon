@@ -118,9 +118,11 @@ transitops/
 
 ## Notes
 
-- The database is a single SQLite file (`backend/transitops.db`), created
+- The DATABASE is a single SQLite file (`backend/transitops.db`), created
   automatically on first run — delete it any time to reset all data.
 - The JWT signing secret in `app/auth.py` is a placeholder; change it before
   any real deployment.
 - CSV export covers "Mandatory"; PDF export was left out per the spec
   (marked optional).
+
+
