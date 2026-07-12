@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import vehiclesRoutes from './routes/vehicles.js';
@@ -38,6 +40,18 @@ app.use('/api/expenses', expensesRoutes);
 app.use('/api/reports', reportsRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static assets from frontend build directory
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDistPath));
+
+// Route all non-API requests to the React index.html page (for SPA routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

@@ -1,0 +1,15 @@
+{
+  "name": "transitops-monolith",
+  "version": "1.0.0",
+  "description": "TransitOps full-stack fleet operations platform",
+  "scripts": {
+    "install:server": "npm install --prefix server",
+    "install:frontend": "npm install --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "build": "npm run install:server && npm run install:frontend && npm run build:frontend",
+    "start": "npm run start --prefix server"
+  },
+  "dependencies": {
+    "mongodb": "^7.5.0"
+  }
+}
