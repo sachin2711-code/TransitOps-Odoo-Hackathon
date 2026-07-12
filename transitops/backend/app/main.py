@@ -54,8 +54,13 @@ if os.path.isdir(FRONTEND_DIR):
 
     @app.get("/{full_path:path}")
     def serve_spa(full_path: str):
-        # Let API routes 404 normally; everything else falls back to index.html
         candidate = os.path.join(FRONTEND_DIR, full_path)
         if os.path.isfile(candidate):
+            if candidate.endswith(".js"):
+                return FileResponse(candidate, media_type="application/javascript")
+            if candidate.endswith(".css"):
+                return FileResponse(candidate, media_type="text/css")
+            if candidate.endswith(".mjs"):
+                return FileResponse(candidate, media_type="application/javascript")
             return FileResponse(candidate)
         return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
