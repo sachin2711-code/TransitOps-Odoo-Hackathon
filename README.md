@@ -138,7 +138,7 @@ transitops/
     └── package.json          # Frontend dependencies & npm scripts
 ```
 
-## Notes
+## Notes :
 
 - The database is MongoDB. If no external URI is provided, it runs as an in-memory database instance automatically, losing its state when the server stops.
 - CSV export covers "Mandatory"; PDF export was left out per the spec (marked optional).
